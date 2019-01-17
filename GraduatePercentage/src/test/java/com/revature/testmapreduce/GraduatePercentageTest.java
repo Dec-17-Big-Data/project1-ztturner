@@ -61,6 +61,9 @@ public class GraduatePercentageTest {
 		mapDriver.runTest();
 	}
 	
+	/*
+	 * Test the reducer
+	 */
 	@Test
 	public void testGraduatePercentageReducer() {
 		List<PercentageYearWritable> value = new ArrayList<PercentageYearWritable>();
@@ -69,7 +72,7 @@ public class GraduatePercentageTest {
 		
 		reduceDriver.withInput(new Text("Zimbabwe"), value);
 
-		reduceDriver.withOutput(new Text("Zimbabwe"), new Text(0.99827 + " " + 2013));
+		reduceDriver.withOutput(new Text("Zimbabwe"), new Text(0.99827 + "\t" + 2013));
 		
 		reduceDriver.runTest();
 	}
@@ -87,7 +90,7 @@ public class GraduatePercentageTest {
 		mapReduceDriver.withInput(new LongWritable(6), new Text("\"Zimbabwe\",\"ZWE\",\"Gross graduation ratio, tertiary, female (%)\",\"SE.TER.CMPL.FE.ZS\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"0.99827\",\"\",\"\",\"\","));
 		mapReduceDriver.withInput(new LongWritable(7), new Text("\"Zimbabwe\",\"ZWE\",\"Gross graduation ratio, tertiary, male (%)\",\"SE.TER.CMPL.MA.ZS\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"1.14281\",\"\",\"\",\"\","));
 
-		mapReduceDriver.addOutput(new Text("Zimbabwe"), new Text(0.99827 + " " + 2013));
+		mapReduceDriver.addOutput(new Text("Zimbabwe"), new Text(0.99827 + "\t" + 2013));
 		
 		mapReduceDriver.runTest();
 	}

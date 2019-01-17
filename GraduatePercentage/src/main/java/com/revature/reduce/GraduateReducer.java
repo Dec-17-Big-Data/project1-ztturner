@@ -15,7 +15,7 @@ public class GraduateReducer extends Reducer<Text, PercentageYearWritable, Text,
 	public void reduce(Text key, Iterable<PercentageYearWritable> values, Context context) throws IOException, InterruptedException {		
 		for(PercentageYearWritable value : values) {
 			if(value.getPercentage() < 30.0) {
-				context.write(key, new Text(value.getPercentage() + " " + value.getYearOfData()));
+				context.write(key, new Text(value.getPercentage() + "\t" + value.getYearOfData()));
 			}
 		}
 	}

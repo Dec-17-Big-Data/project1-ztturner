@@ -4,7 +4,6 @@ import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
 
-import org.apache.hadoop.io.Writable;
 import org.apache.hadoop.io.WritableComparable;
 
 public class PercentageYearWritable implements WritableComparable<PercentageYearWritable> {
@@ -50,9 +49,9 @@ public class PercentageYearWritable implements WritableComparable<PercentageYear
 	}
 
 	public static PercentageYearWritable read(DataInput in) throws IOException {
-		PercentageYearWritable p = new PercentageYearWritable();
-		p.readFields(in);
-		return p;
+		PercentageYearWritable writable = new PercentageYearWritable();
+		writable.readFields(in);
+		return writable;
 	}
 
 	@Override
@@ -101,5 +100,11 @@ public class PercentageYearWritable implements WritableComparable<PercentageYear
 		if (yearOfData != other.yearOfData)
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "PercentageYearWritable [percentage=" + percentage
+				+ ", yearOfData=" + yearOfData + "]";
 	}
 }
