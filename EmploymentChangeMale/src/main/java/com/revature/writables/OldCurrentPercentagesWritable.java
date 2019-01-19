@@ -37,11 +37,12 @@ public class OldCurrentPercentagesWritable implements Writable {
 		this.currentPercentage = currentPercentage;
 	}
 	
+
 	public void readFields(DataInput in) throws IOException {
 		oldPercentage = in.readDouble();
-		currentPercentage = in.readDouble();
+		currentPercentage = in.readDouble();		
 	}
-	
+
 	public void write(DataOutput out) throws IOException {
 		out.writeDouble(oldPercentage);
 		out.writeDouble(currentPercentage);

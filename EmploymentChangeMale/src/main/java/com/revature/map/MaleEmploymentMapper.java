@@ -8,12 +8,12 @@ import org.apache.hadoop.mapreduce.Mapper;
 
 import com.revature.writables.OldCurrentPercentagesWritable;
 
-public class EmploymentMapper extends Mapper<LongWritable, Text, Text, OldCurrentPercentagesWritable> {
+public class MaleEmploymentMapper extends Mapper<LongWritable, Text, Text, OldCurrentPercentagesWritable> {
 	/**
-	 * The mapper's job is to take records that contain the data indicator code for the modeled ILO estimate of employment-to-population ratio for females 15 and above
+	 * The mapper's job is to take records that contain the data indicator code for the modeled ILO estimate of employment-to-population ratio for males 15 and above
 	 * and output the country name, the percentage employed in the year 2000, and the percentage employed in the latest year with data.
 	 * The reason the modeled ILO estimate is used as opposed to the national estimate is that more countries have data in the modeled ILO estimate row than the national estimate row.
-	 * It is assumed that the question asks for the difference in percent points between the year 2000 and the latest year with data.
+	 * It is assumed that the question asks for the difference between the year 2000 and the latest year with data.
 	 * It is assumed that countries that do not have a year 2000 data point or any additional data points after 2000 should not be output.
 	 */
 	public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
@@ -25,8 +25,8 @@ public class EmploymentMapper extends Mapper<LongWritable, Text, Text, OldCurren
 			int lastFieldLength = splitLine[splitLine.length-1].length();
 			splitLine[splitLine.length-1] = splitLine[splitLine.length-1].substring(0, lastFieldLength - 2); // remove the trailing quotation mark and comma from the last field
 			
-			// if the fourth field matches the indicator code for employment-to-population ratio for females (modeled ILO estimate), look for data points in the row
-			if(splitLine[3].toUpperCase().compareTo("SL.EMP.TOTL.SP.FE.ZS") == 0) {
+			// if the fourth field matches the indicator code for employment-to-population ratio for males (modeled ILO estimate), look for data points in the row
+			if(splitLine[3].toUpperCase().compareTo("SL.EMP.TOTL.SP.MA.ZS") == 0) {
 				
 				// check that the split line is long enough to hold the 2000 data point
 				if((2000 - 1956) < splitLine.length) {

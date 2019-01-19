@@ -7,10 +7,10 @@ import org.apache.hadoop.mapreduce.Reducer;
 
 import com.revature.writables.OldCurrentPercentagesWritable;
 
-public class EmploymentReducer extends Reducer<Text, OldCurrentPercentagesWritable, Text, Text> {
+public class FemaleEmploymentReducer extends Reducer<Text, OldCurrentPercentagesWritable, Text, Text> {
 	/**
 	 * The reducer's job is to take in the country name, the year 2000 percentage of female employment, and the latest year percentage of female employment,
-	 * calculate the actual difference in percent points and relative difference in percentage for the latest year and year 2000,
+	 * calculate the actual difference in percent points and relative difference in percentage between the latest year and year 2000,
 	 * and output the country name, the actual difference in percent points, and the relative difference in percentage.
 	 */
 	public void reduce(Text key, Iterable<OldCurrentPercentagesWritable> values, Context context) throws IOException, InterruptedException {

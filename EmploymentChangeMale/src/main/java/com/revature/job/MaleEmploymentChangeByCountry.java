@@ -6,25 +6,24 @@ import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
-import com.revature.map.FemaleEmploymentMapper;
-import com.revature.reduce.FemaleEmploymentReducer;
+import com.revature.map.MaleEmploymentMapper;
+import com.revature.reduce.MaleEmploymentReducer;
 import com.revature.writables.OldCurrentPercentagesWritable;
 
-public class FemaleEmploymentChangeByCountry {
-	
+public class MaleEmploymentChangeByCountry {
 	public static void main(String[] args) throws Exception {
 		if(args.length != 2) {
-			System.out.println("usage: hadoop jar EmploymentChangeFemale.jar com.revature.job.FemaleEmploymentChangeByCountry inputDir outputDir");
+			System.out.println("usage: hadoop jar EmploymentChangeMale.jar com.revature.job.MaleEmploymentChangeByCountry inputDir outputDir");
 			return;
 		}
 		
 		Job job = Job.getInstance();		
-		job.setJobName("Female Employment Change");
+		job.setJobName("Male Employment Change");
 		
 		// set the driver, mapper, and reducer classes
-		job.setJarByClass(FemaleEmploymentChangeByCountry.class);
-		job.setMapperClass(FemaleEmploymentMapper.class);
-		job.setReducerClass(FemaleEmploymentReducer.class);
+		job.setJarByClass(MaleEmploymentChangeByCountry.class);
+		job.setMapperClass(MaleEmploymentMapper.class);
+		job.setReducerClass(MaleEmploymentReducer.class);
 		
 		// set the outputs
 		job.setMapOutputKeyClass(Text.class);
