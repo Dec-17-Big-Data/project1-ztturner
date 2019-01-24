@@ -36,13 +36,11 @@ public class PercentageYearWritable implements WritableComparable<PercentageYear
 		this.yearOfData = yearOfData;
 	}
 
-	@Override
 	public void readFields(DataInput in) throws IOException {
 		percentage = in.readDouble();
 		yearOfData = in.readInt();
 	}
 
-	@Override
 	public void write(DataOutput out) throws IOException {
 		out.writeDouble(percentage);
 		out.writeInt(yearOfData);
@@ -54,7 +52,6 @@ public class PercentageYearWritable implements WritableComparable<PercentageYear
 		return writable;
 	}
 
-	@Override
 	public int compareTo(PercentageYearWritable o) {
 		if(this.yearOfData < o.yearOfData) {
 			return -1;
@@ -96,7 +93,6 @@ public class PercentageYearWritable implements WritableComparable<PercentageYear
 
 	@Override
 	public String toString() {
-		return "PercentageYearWritable [percentage=" + percentage
-				+ ", yearOfData=" + yearOfData + "]";
+		return percentage + "\t" + yearOfData;
 	}
 }

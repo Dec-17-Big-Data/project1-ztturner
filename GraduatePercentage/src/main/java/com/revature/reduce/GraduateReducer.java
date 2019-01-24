@@ -9,7 +9,7 @@ import com.revature.writables.PercentageYearWritable;
 
 public class GraduateReducer extends Reducer<Text, PercentageYearWritable, Text, Text> {
 	/**
-	 * The reducer's job is to take in the country name, female graduate percentage, and year
+	 * The reducer's job is to take in the country names, female graduate percentages, and year the percentages come from
 	 * and output the countries which have a female graduate percentage that is less than 30%.
 	 */
 	public void reduce(Text key, Iterable<PercentageYearWritable> values, Context context) throws IOException, InterruptedException {		

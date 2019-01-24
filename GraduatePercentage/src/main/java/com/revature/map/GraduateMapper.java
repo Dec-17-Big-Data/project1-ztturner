@@ -10,7 +10,7 @@ import com.revature.writables.PercentageYearWritable;
 
 public class GraduateMapper extends Mapper<LongWritable, Text, Text, PercentageYearWritable> {
 	/**
-	 * The mapper's job is to take the records that contain the data incicator code for gross graduation ratio from tertiary education for females
+	 * The mapper's job is to take the records that contain the data indicator code for gross graduation ratio from tertiary education for females
 	 * and output the country name, the percentage of graduates, and year of the latest data point.
 	 * An assumption was made that the required graduation statistic is for tertiary education.
 	 * An assumption was made that countries that did not have any data points for gross graduation ratio should not be included.

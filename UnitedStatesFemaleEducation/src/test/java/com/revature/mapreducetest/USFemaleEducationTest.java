@@ -14,11 +14,12 @@ import org.junit.Test;
 
 import com.revature.map.USFemaleEducationMapper;
 import com.revature.reduce.USFemaleEducationReducer;
+import com.revature.writables.PercentageYearWritable;
 
 public class USFemaleEducationTest {
-	private MapDriver<LongWritable, Text, Text, DoubleWritable> mapDriver;
-	private ReduceDriver<Text, DoubleWritable, Text, DoubleWritable> reduceDriver;
-	private MapReduceDriver<LongWritable, Text, Text, DoubleWritable, Text, DoubleWritable> mapReduceDriver;
+	private MapDriver<LongWritable, Text, Text, PercentageYearWritable> mapDriver;
+	private ReduceDriver<Text, PercentageYearWritable, Text, DoubleWritable> reduceDriver;
+	private MapReduceDriver<LongWritable, Text, Text, PercentageYearWritable, Text, DoubleWritable> mapReduceDriver;
 	
 	/*
 	 * Setup the harnesses before every test
@@ -26,14 +27,14 @@ public class USFemaleEducationTest {
 	@Before
 	public void setup() {
 		USFemaleEducationMapper mapper = new USFemaleEducationMapper();
-		mapDriver = new MapDriver<LongWritable, Text, Text, DoubleWritable>();
+		mapDriver = new MapDriver<LongWritable, Text, Text, PercentageYearWritable>();
 		mapDriver.setMapper(mapper);
 		
 		USFemaleEducationReducer reducer = new USFemaleEducationReducer();
-		reduceDriver = new ReduceDriver<Text, DoubleWritable, Text, DoubleWritable>();
+		reduceDriver = new ReduceDriver<Text, PercentageYearWritable, Text, DoubleWritable>();
 		reduceDriver.setReducer(reducer);
 		
-		mapReduceDriver = new MapReduceDriver<LongWritable, Text, Text, DoubleWritable, Text, DoubleWritable>();
+		mapReduceDriver = new MapReduceDriver<LongWritable, Text, Text, PercentageYearWritable, Text, DoubleWritable>();
 		mapReduceDriver.setMapper(mapper);
 		mapReduceDriver.setReducer(reducer);
 	}
@@ -42,33 +43,33 @@ public class USFemaleEducationTest {
 	public void testUSFemaleEducationMapper() {
 		mapDriver.withInput(new LongWritable(1), new Text("\"United States\",\"USA\",\"Educational attainment, completed Bachelor's or equivalent, population 25+ years, female (%)\",\"SE.TER.HIAT.BA.FE.ZS\",\"14.8\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"18.7\",\"\",\"\",\"\",\"\",\"22.2\",\"\",\"\",\"\",\"26.9\",\"28.10064\",\"28.02803\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"44.54951\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"35.37453\",\"36.00504\",\"37.52263\",\"\",\"38.44067\",\"39.15297\",\"39.89922\",\"40.53132\",\"41.12231\",\"20.18248\",\"20.38445\",\"20.68499\",\"\","));
 		
-		mapDriver.withOutput(new Text("Bachelor's"), new DoubleWritable(36.00504 - 35.37453));
-		mapDriver.withOutput(new Text("Bachelor's"), new DoubleWritable(37.52263 - 36.00504));
-		mapDriver.withOutput(new Text("Bachelor's"), new DoubleWritable(38.44067 - 37.52263));
-		mapDriver.withOutput(new Text("Bachelor's"), new DoubleWritable(39.15297 - 38.44067));
-		mapDriver.withOutput(new Text("Bachelor's"), new DoubleWritable(39.89922 - 39.15297));
-		mapDriver.withOutput(new Text("Bachelor's"), new DoubleWritable(40.53132 - 39.89922));
-		mapDriver.withOutput(new Text("Bachelor's"), new DoubleWritable(41.12231 - 40.53132));
-		mapDriver.withOutput(new Text("Bachelor's"), new DoubleWritable(20.38445 - 20.18248));
-		mapDriver.withOutput(new Text("Bachelor's"), new DoubleWritable(20.68499 - 20.38445));
+		mapDriver.withOutput(new Text("Bachelor's"), new PercentageYearWritable((36.00504 - 35.37453), 2005));
+		mapDriver.withOutput(new Text("Bachelor's"), new PercentageYearWritable((37.52263 - 36.00504), 2006));
+		mapDriver.withOutput(new Text("Bachelor's"), new PercentageYearWritable((38.44067 - 37.52263), 2008));
+		mapDriver.withOutput(new Text("Bachelor's"), new PercentageYearWritable((39.15297 - 38.44067), 2009));
+		mapDriver.withOutput(new Text("Bachelor's"), new PercentageYearWritable((39.89922 - 39.15297), 2010));
+		mapDriver.withOutput(new Text("Bachelor's"), new PercentageYearWritable((40.53132 - 39.89922), 2011));
+		mapDriver.withOutput(new Text("Bachelor's"), new PercentageYearWritable((41.12231 - 40.53132), 2012));
+		mapDriver.withOutput(new Text("Bachelor's"), new PercentageYearWritable((20.38445 - 20.18248), 2014));
+		mapDriver.withOutput(new Text("Bachelor's"), new PercentageYearWritable((20.68499 - 20.38445), 2015));
 		
 		mapDriver.runTest();
 	}
 	
 	@Test
 	public void testUSFemaleEducationReducer() {
-		List<DoubleWritable> values = new ArrayList<DoubleWritable>();
+		List<PercentageYearWritable> values = new ArrayList<PercentageYearWritable>();
 		
-		values.add(new DoubleWritable(0.13515));
-		values.add(new DoubleWritable(0.1651894));
-		values.add(new DoubleWritable(0.28922));
-		values.add(new DoubleWritable(0.684984));
+		values.add(new PercentageYearWritable(0.13515, 2013));
+		values.add(new PercentageYearWritable(0.1651894,2014));
+		values.add(new PercentageYearWritable(0.28922, 2015));
+		values.add(new PercentageYearWritable(0.684984, 2016));
 		
 		reduceDriver.withInput(new Text("Master's"), values);
 		double sum = 0;
 		
-		for(DoubleWritable value : values) {
-			sum = sum + value.get();
+		for(PercentageYearWritable value : values) {
+			sum = sum + value.getPercentage();
 		}
 		
 		double expectedOutput = sum / values.size();

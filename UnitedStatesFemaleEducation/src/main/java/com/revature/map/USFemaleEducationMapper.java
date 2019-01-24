@@ -2,14 +2,18 @@ package com.revature.map;
 
 import java.io.IOException;
 
-import org.apache.hadoop.io.DoubleWritable;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
-public class USFemaleEducationMapper extends Mapper<LongWritable, Text, Text, DoubleWritable> {
+import com.revature.writables.PercentageYearWritable;
+
+public class USFemaleEducationMapper extends Mapper<LongWritable, Text, Text, PercentageYearWritable> {
 	/**
-	 * 
+	 * The mapper's job is to find the rows that match the United States Bachelor's, Master's, and Doctoral percentages and write out the education level as the key
+	 * and the difference between two consecutive years in percent points and the second consecutive year as the value.
+	 * It is assumed that the 2012 field should be ignored as the ISCED definition for the education levels was changed in 2011 which could create an unfair
+	 * comparison between the 2012 percentage before the definition change and the 2013 percentage after the definition change.
 	 */
 	public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
 		String line = value.toString();		
@@ -59,7 +63,7 @@ public class USFemaleEducationMapper extends Mapper<LongWritable, Text, Text, Do
 							
 							nextFieldPercentage = Double.parseDouble(splitLine[nextField]);
 							
-							context.write(new Text(educationLevel), new DoubleWritable(nextFieldPercentage - currentFieldPercentage));
+							context.write(new Text(educationLevel), new PercentageYearWritable((nextFieldPercentage - currentFieldPercentage), (nextField + 1956)));
 						}
 					}
 				}
